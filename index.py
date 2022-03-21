@@ -8,15 +8,13 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash import Dash, dcc, html, Input, Output
 from pages import bar, customerAnalysis
-
 from app import app
 from app import server
 import pathlib
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-app = Dash(__name__, external_stylesheets = external_stylesheets)
-server = app.server
+
+
 
 
 table = pd.read_excel('Retail_Data.xlsx', sheet_name = [0, 1, 2])
@@ -39,6 +37,8 @@ app.layout = html.Div([
     dcc.Location(id='url', refresh= False),
     html.Div([
         dcc.Link('barcharts', href='/pages/bar'),
+    ], className="row"),
+    html.Div([
         dcc.Link('Customer Analysis', href='/pages/customerAnalysis'),
     ], className="row"),
     html.Div(id='page-content', children=[]),
@@ -81,8 +81,7 @@ def display_page(pathname):
         return bar.layout
     elif pathname == '/pages/customerAnalysis':
         return customerAnalysis.layout
-    else:
-        return '404'
+
 
 if __name__ == '__main__':
     app.run_server(debug=False)
